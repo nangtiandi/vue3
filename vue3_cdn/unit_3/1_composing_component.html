@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composing Component</title>
+</head>
+<body>
+    
+    <div id="to-do-list">
+        <ol>
+            <to-item
+                v-for="fruit in fruits"
+                v-bind:todo="fruit"
+                v-bind:key="fruit.id"
+            ></to-item>
+        </ol>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const todoList = {
+            data(){
+                return{
+                    fruits:[
+                        {id:0, text: 'apple'},
+                        {id:1, text: 'banana'},
+                        {id:2, text: 'orange'},
+                    ]
+                }
+            }
+        }
+        const app = Vue.createApp(todoList);
+
+        app.component('to-item',{
+            props: ['todo'],
+            template: `<li>{{todo.text}}</li>`
+        })
+        app.mount('#to-do-list')
+    </script>
+</body>
+</html>

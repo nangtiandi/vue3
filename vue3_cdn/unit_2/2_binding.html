@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interpulation using attribute binding</title>
+</head>
+<body>
+    
+    <div id="app">
+        <span v-bind:title="message">Hover Me Attribute binding</span>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        let binding = {
+            data(){
+                return{
+                    message: "you reloaded this on" + new Date().toLocaleString()
+                }
+            }
+        }
+        Vue.createApp(binding).mount('#app')
+    </script>
+</body>
+</html>

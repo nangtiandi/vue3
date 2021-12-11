@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="todo-list-app">
+        <ol>
+            <todo-item
+            v-for = "fruit in fruits"
+            v-bind:todo = fruit
+            
+            ></todo-item>
+        </ol>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const app = {
+            data: function(){
+                return{
+                    fruits:[
+                        {id:0, text: 'apple'},
+                        {id:1, text: 'banana'},
+                        {id:2, text: 'orange'},
+                    ]
+                }
+            }
+        }
+        const vue = Vue.createApp(app);
+        vue.component('todo-item',{
+            props: ['todo'],
+            template: `<li> {{todo.text}} </li>`
+        })
+        vue.mount('#todo-list-app')
+    </script>
+</body>
+</html>
