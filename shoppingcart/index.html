@@ -5,10 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping-cart</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="./assets/style.css">
     <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container">
+        <div class="row">
+            <div id="app">
+                <div class="row">
+                    <!-- @add-to-cart က global component မှာ $emit() နဲ့ရေးထားတဲ့အတွက်ခေါ်သုံးနိုင်တာ -->
+                    <product-display :premium="premium" @add-to-cart="plusCart"></product-display>
+                    <div class="col-md-4 my-4">
+                        <div class="card border-0 shadow">
+                            <div class="card-body">
+                                <div class="cart text-end">
+                                    <h4>Cart ({{cart}})</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
+
+    <script src="./assets/app.js"></script>
+
+    <script src="./components/ProductDisplay.js"></script>
+    <script src="./components/ReviewForm.js"></script>
+    <script src="./components/ReviewList.js"></script>
+    <script>
+        const mountedApp = app.mount('#app');
+    </script>
 </body>
 </html>
