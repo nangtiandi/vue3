@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Todo List Vue3</title>
+   <script src="https://unpkg.com/vue@next"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <!-- animate css -->
+   <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <style>
+     .deletedAnimate{
+        animation: .5s rubberBand;
+     }
+  </style>
+</head>
+<body>
+   <div class="container my-5" id="app">
+      <div class="row justify-content-center">
+         <div class="col-md-6">
+            <div class="card">
+               <div class="card-body">
+                  <div class="card-header">
+                     <div class="row justify-content-between">
+                        <div class="col-10">
+                           <input type="text" placeholder="Write Something here..." class="form-control" v-model="todoText" @keyup.enter="todoAdd()">
+                        </div>
+                        <div class="col-2 d-flex align-items-center">
+                           <button class="btn btn-info text-white" @click="todoAdd()">
+                             add 
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="d-flex justify-content-between my-3 mx-3">
+                     <p><strong>To Do List{{lists.length > 1 ?"s" : ""}}</strong></p>
+                     <p v-if="lists.length>0 && doneCount === lists.length " class="badge bg-success">All Done</p>
+                     <p v-else class="badge bg-info">Done {{doneCount}}</p>
+                  </div>
+                  <ul class="list-group">
+                     <li v-for="list in lists" :key="list.id" @click.ctrl="list.isEdit = true" class="list-group-item d-flex justify-content-between align-items-center animate__animated animate__fadeInDown"> 
+                        <input type="text" class="form-control form-control-lg-2" v-if="list.isEdit" v-model="list.text" @keyup.enter="list.isEdit = false">
+                        <div class="custom-control" v-else>                        
+                           <input type="checkbox"  v-model="list.isChecked" class="custom-control-input" :id="'checkList' +list.id">
+                           <label :for="'checkList' +list.id" :class="['control-label',{'text-decoration-line-through animate__animated animate__shakeX':list.isChecked}]"> <strong> {{list.text}}</strong></label>
+                        </div>
+                        <div class="">
+                           <button class="btn btn-danger" @click="del(list.id)">Del</button>
+                        </div>
+                     </li>
+                   </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <script>
+      const app = Vue.createApp({
+         data() {
+            return {
+               currentId : 0,
+               todoText : '',
+               lists :[] 
+            }
+         },
+         methods: {
+            todoAdd(){
+               this.currentId++;
+               this.lists.push({
+                  id : this.currentId,
+                  text: this.todoText,
+                  isChecked:false,
+                  isEdit : false,
+                  isDeleted : false
+               });
+               this.todoText = ''
+            },
+            del(x){
+               // if(confirm('Are You sure want to delete?')){
+                  setTimeout(()=>this.lists = this.lists.filter(el => el.id !== x),600)
+               // }
+            }
+         },
+         computed:{
+            doneCount(){
+               return this.lists.filter(el=> el.isChecked === true).length;
+            }
+         }
+      });
+      app.mount('#app')
+   </script>
+</body>
+</html>

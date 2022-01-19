@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <script src="https://unpkg.com/vue@next"></script>
+   <title>V-For</title>
+</head>
+<body>
+   <div class="container">
+      <div class="row justify-content-center">
+         <div class="col-md-8 my-5">
+            <div id="app">
+               <div class="card">
+                  <div class="card-header">
+                     <h3 class="text-center">The Total Item in table is {{totalItem}}</h3>
+                     <hr>
+                     <div class="row">
+                        <div class="col-auto">
+                           <input type="text" class="form-control" placeholder="Enter Item Name" v-model="itemSet">
+                        </div>
+                        <div class="col-auto">
+                           <input type="text" class="form-control" placeholder="Enter Item Price" v-model="priceSet" @keyup.enter="addItem()">
+                        </div>
+                        <div class="col-auto">
+                           <button class="btn btn-primary" @click="addItem()">Add Item</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <table class="table table-bordered">
+                        <thead>
+                           <tr>
+                              <th>#</th>
+                              <th>Name</th>
+                              <th>Price</th>
+                           </tr>
+                        </thead>
+                           <tr v-for="(item) in items">
+                              <td> {{item.id}} </td>
+                              <td> {{item.name}} </td>
+                              <td> {{item.price}} </td>
+                           </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   
+   
+
+   <script>
+      const app = Vue.createApp({
+         data() {
+            return {
+               itemSet : '',
+               priceSet : '',
+              items: [
+                 {id:1,name:'apple',price:350},
+                 {id:2,name:'orange',price:500},
+                 {id:3,name:'banana',price:200}
+              ]
+            }
+         },
+         methods: {
+            addItem(){
+                this.items.push({
+                   id:this.items.length+1,
+                   name:this.itemSet,
+                   price:this.priceSet
+                });
+                this.itemSet = '';
+                this.priceSet = '';
+            }
+         },
+         computed: {
+            totalItem(){
+               return this.items.length;
+            }
+         }
+      }).mount('#app')
+
+   </script>
+</body>
+</html>
